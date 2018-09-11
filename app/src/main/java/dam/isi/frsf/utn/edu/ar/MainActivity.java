@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         togAccion = (ToggleButton) findViewById(R.id.togAccion);
         chkAceptoTerminos = (CheckBox) findViewById(R.id.chkAceptoTerminos);
 
-
+        //Ejercicio 5
         seekDias.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekDias, int i, boolean b) {
@@ -93,7 +93,83 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekDias) {
             }
         });
+        
+        //Ejercicio 6
+        chkAceptoTerminos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                /// RESOLVER logica
+                if(!b){
+                    Context context;
+                    context = getApplicationContext();
+                    CharSequence text = "Es obligatorio aceptar las condiciones";
+                    int duration = Toast.LENGTH_SHORT;
 
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                else{
+                    btnPF.setEnabled(true);
+                }
+
+            }
+        });
+        
+        //Ejercicio 7
+        btnPF.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                btnPFClicked();
+            }
+        });
+
+    }
+    
+     private void btnPFClicked() {
+        String email;
+        String cuit;
+        int monto;
+        int dias;
+
+        email = edMail.getText().toString();
+        cuit = edtCuit.getText().toString();
+        monto = Integer.parseInt(edtMonto.getText().toString());
+        dias = Integer.parseInt(tvDiasSeleccionados.getText().toString());
+
+         if(dias<=10){
+            error =true;
+            tvMensaje.append("La cantidad de días Seleccionados debe ser superior a 10");
+        }
+        if(monto <=0){
+            error =true;
+            tvMensaje.append("El Monto a Invertir no puede ser nulo");
+        }
+        if(email.length()<=0){
+            error =true;
+            tvMensaje.append("Debe ingresar un Email");
+        }
+        if(cuit.length()<=0 ){
+            error =true;
+            tvMensaje.append("Debe ingresar un CUIT/CUIL");
+        }
+
+        if(error){
+            tvMensaje.setTextColor(Color.RED);
+            Context context;
+            context = getApplicationContext();
+            CharSequence text = "ERROR! no es posible realizar el Plazo Fijo con los Datos Ingresados";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        else{
+            tvMensaje.setTextColor(Color.BLUE);
+            tvMensaje.append("El Plazo Fijo se Realizo Exitosamente");
+            tvMensaje.append("Plazo Fijo ( Días: "
+                    + dias+" , Monto: "
+                    + monto +" Avisar Vencimiento: Renovar Automáticamente: Moneda: )");
+        }
     }
 
 }
