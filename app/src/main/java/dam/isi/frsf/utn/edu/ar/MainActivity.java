@@ -1,20 +1,25 @@
 package dam.isi.frsf.utn.edu.ar;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    String[] tasasArray = {"25%", "27.5%", "30%", "32.3%", "35%", "38.5%"};
+    String[] tasasArray = {"25", "27.5", "30", "32.3", "35", "38.5"};
     private PlazoFijo pf;
     private Cliente cliente;
 
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pf = new PlazoFijo(getResources().getStringArray(R.array.tasas));
+        //pf = new PlazoFijo(tasasArray);   //R.array.tasas da nul i dont why know
         cliente = new Cliente();
 
         // widgets de la vista
@@ -82,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 tvDiasSeleccionados.setText(i);
                 pf.setDias(i);
                 tvIntereses.setText(pf.intereses().toString());
+                tvDiasSeleccionados.setText(""+i);
             }
 
             @Override
@@ -93,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekDias) {
             }
         });
-        
+
         //Ejercicio 6
         chkAceptoTerminos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
@@ -114,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        
+
         //Ejercicio 7
         btnPF.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -122,21 +129,20 @@ public class MainActivity extends AppCompatActivity {
                 btnPFClicked();
             }
         });
-
     }
-    
-     private void btnPFClicked() {
+    private void btnPFClicked() {
+        boolean error=false;
         String email;
         String cuit;
         int monto;
         int dias;
 
-        email = edMail.getText().toString();
-        cuit = edtCuit.getText().toString();
+        email = edMail.getText().toString().replace(" ", "");
+        cuit = edtCuit.getText().toString().replace(" ", "");
         monto = Integer.parseInt(edtMonto.getText().toString());
         dias = Integer.parseInt(tvDiasSeleccionados.getText().toString());
 
-         if(dias<=10){
+        if(dias<=10){
             error =true;
             tvMensaje.append("La cantidad de días Seleccionados debe ser superior a 10");
         }
@@ -171,5 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     + monto +" Avisar Vencimiento: Renovar Automáticamente: Moneda: )");
         }
     }
+
+
 
 }

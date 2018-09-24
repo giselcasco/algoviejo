@@ -13,7 +13,7 @@ public class PlazoFijo {
     private Cliente cliente;
 
     public PlazoFijo(String[] tasas){
-        Log.d("APP_01", tasas+"");
+        //Log.d("APP_01", tasas+"");
         Log.d("APP_01", Arrays.toString(tasas));
         this.tasas = tasas;
         this.monto = 0.0;
@@ -106,8 +106,11 @@ public class PlazoFijo {
     }
 
     public Double intereses(){
-
-        return (monto * Math.pow((((tasa()*0.01) + 1)),(dias/360)) - 1);
+        double tasa = tasa();
+        double mat = Math.pow((tasa*0.01)+ 1,(dias/360));
+        return (monto * mat  - 1);
 
     }
+
+
 }
