@@ -90,8 +90,10 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekDias, int i, boolean b) {
                 tvDiasSeleccionados.setText(" "+i);
                 pf.setDias(i);
+                if(Integer.valueOf(edtMonto.getText().toString()) > 0){
+                pf.setMonto((double) Integer.valueOf(edtMonto.getText().toString()));
                 tvIntereses.setText(pf.intereses().toString());
-                tvDiasSeleccionados.setText(""+i);
+                }
             }
 
             @Override
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
         cuit = edtCuit.getText().toString().replace(" ", "");
         monto = Integer.parseInt(edtMonto.getText().toString());
-        dias = Integer.parseInt(tvDiasSeleccionados.getText().toString());
+        dias = pf.getDias();
 
         if(dias<=10){
             error =true;
