@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import dam.isi.frsf.utn.edu.ar.Modelo.Cliente;
+import dam.isi.frsf.utn.edu.ar.Modelo.PlazoFijo;
+
 public class MainActivity extends AppCompatActivity {
 
     String[] tasasArray = {"25", "27.5", "30", "32.3", "35", "38.5"};
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         seekDias.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekDias, int i, boolean b) {
-                tvDiasSeleccionados.setText(i);
+                tvDiasSeleccionados.setText(" "+i);
                 pf.setDias(i);
                 tvIntereses.setText(pf.intereses().toString());
                 tvDiasSeleccionados.setText(""+i);
@@ -93,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekDias) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekDias) {
             }
         });
+
 
         //Ejercicio 6
         chkAceptoTerminos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
@@ -130,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     private void btnPFClicked() {
         boolean error=false;
         String email;
@@ -137,7 +142,14 @@ public class MainActivity extends AppCompatActivity {
         int monto;
         int dias;
 
-        email = edMail.getText().toString().replace(" ", "");
+        //Validar Correo Electronico
+        email = edMail.getText().toString().trim();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(!email.matches(emailPattern) ){
+            Toast.makeText(MainActivity.this,"Debe Ingresar un Correo Electrónico válido",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         cuit = edtCuit.getText().toString().replace(" ", "");
         monto = Integer.parseInt(edtMonto.getText().toString());
         dias = Integer.parseInt(tvDiasSeleccionados.getText().toString());

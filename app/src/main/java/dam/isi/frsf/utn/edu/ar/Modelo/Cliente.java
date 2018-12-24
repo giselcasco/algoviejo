@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar;
+package dam.isi.frsf.utn.edu.ar.Modelo;
 
 public class Cliente {
     private String mail;

@@ -107,7 +107,6 @@
         android:id="@+id/seekDias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="180"
         android:text="@string/lblDiasSeleccionado"
         android:visibility="visible" />
 
